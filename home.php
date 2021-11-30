@@ -83,6 +83,7 @@ if (mysqli_connect_errno())
                     <b> Notes: " . $notes . "</b>
                     <form action='deleteWorkout.php' method='post'>
                         <input type='hidden' name='workout_delete' value='$wid'/>
+                        <input type='hidden' name='exercise_type' value='$etype'/>
                         <input class='btn btn-link btn-sm'type='submit' value='Delete' style='color:red; float:right;'/>
                     </form>
                 </div>

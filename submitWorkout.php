@@ -50,7 +50,7 @@ if($stmt = mysqli_prepare($db, $sql)){
         //header("location: home.php");
         $wid = mysqli_insert_id($db); //last inserted workout ID
         if(strcmp($etype, "weightlifting") === 0) {
-            $sql = "INSERT INTO weightWorkout (workoutID, weight, reps, sets) VALUES (?, ?, ?, ?)";
+            $sql = "INSERT INTO weightworkout (workoutID, weight, reps, sets) VALUES (?, ?, ?, ?)";
             $stmt = mysqli_prepare($db, $sql);
             mysqli_stmt_bind_param($stmt, "iiii", $param_workoutID, $param_weight, $param_reps, $param_sets);
             $param_workoutID = $wid;
@@ -63,7 +63,7 @@ if($stmt = mysqli_prepare($db, $sql)){
                 echo "Oops! Something went wrong. Please try again later.";
             }
         } else if(strcmp($etype, "cardio") === 0) {
-            $sql = "INSERT INTO cardioWorkout (workoutID, distance, duration) VALUES (?, ?, ?)";
+            $sql = "INSERT INTO cardioworkout (workoutID, distance, duration) VALUES (?, ?, ?)";
             $stmt = mysqli_prepare($db, $sql);
             mysqli_stmt_bind_param($stmt, "iii", $param_workoutID, $param_distance, $param_duration);
             $param_workoutID = $wid;
@@ -75,7 +75,7 @@ if($stmt = mysqli_prepare($db, $sql)){
                 echo "Oops! Something went wrong. Please try again later.";
             }
         } else if(strcmp($etype, "bodyweight") === 0) {
-            $sql = "INSERT INTO bodyweightWorkout (workoutID, reps, sets) VALUES (?, ?, ?)";
+            $sql = "INSERT INTO bodyweightworkout (workoutID, reps, sets) VALUES (?, ?, ?)";
             $stmt = mysqli_prepare($db, $sql);
             mysqli_stmt_bind_param($stmt, "iii", $param_workoutID, $param_reps, $param_sets);
             $param_workoutID = $wid;
@@ -87,7 +87,7 @@ if($stmt = mysqli_prepare($db, $sql)){
                 echo "Oops! Something went wrong. Please try again later.";
             }
         } else {
-            $sql = "INSERT INTO stretchWorkout (workoutID, reps, duration) VALUES (?, ?, ?)";
+            $sql = "INSERT INTO stretchworkout (workoutID, reps, duration) VALUES (?, ?, ?)";
             $stmt = mysqli_prepare($db, $sql);
             mysqli_stmt_bind_param($stmt, "iii", $param_workoutID, $param_reps, $param_duration);
             $param_workoutID = $wid;

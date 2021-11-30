@@ -8,7 +8,43 @@ if (mysqli_connect_errno())
     echo "Failed to connect to MySQL: " . mysqli_connect_error();
 }
 
-echo $_POST['workout_delete'];
+$wid = $_POST['workout_delete'];
+$etype = $_POST['exercise_type'];
+if(strcmp($etype, "weightlifting") === 0) {
+    $sql = "DELETE FROM weightworkout WHERE workoutID = ?";
+} else if(strcmp($etype, "bodyweight") === 0) {
+    $sql = "DELETE FROM bodyweightworkout WHERE workoutID = ?";
+} else if(strcmp($etype, "cardio") === 0) {
+    $sql = "DELETE FROM cardioworkout WHERE workoutID = ?";
+} else {
+    $sql = "DELETE FROM stretchworkout WHERE workoutID = ?";
+}
+if($stmt = mysqli_prepare($db, $sql)){
+    // Bind variables to the prepared statement as parameters
+    mysqli_stmt_bind_param($stmt, "i", $param_wid);
+    
+    // Set parameters
+    $param_wid = $wid;
 
+    // Attempt to execute the prepared statement
+    if(mysqli_stmt_execute($stmt)){ 
+        $sql = "DELETE FROM workout WHERE workoutID = ?";
+        if($stmt = mysqli_prepare($db, $sql)){
+            // Bind variables to the prepared statement as parameters
+            mysqli_stmt_bind_param($stmt, "i", $param_wid);
+            
+            // Set parameters
+            $param_wid = $wid;
+            if(mysqli_stmt_execute($stmt)){ 
+                header("location: home.php");
+            }
+            else {
+                echo "Delete the workout failed";
+            }
+        }
+    } else {
+        echo "Delete from table failed";
+    }
+}
 mysqli_close($db);
 ?>
