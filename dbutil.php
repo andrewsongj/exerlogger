@@ -1,8 +1,8 @@
 <?php
 class DbUtil{
-	public static $loginUser = "joyul"; 
-	public static $loginPass = "whdbfl<33";
-	public static $host = "localhost:3307"; // local host
+	public static $loginUser = "clark"; 
+	public static $loginPass = "password";
+	public static $host = "localhost:3306"; // local host
 	public static $schema = "final"; // DB Schema
 	
 	public static function loginConnection(){
