@@ -99,7 +99,6 @@ if($stmt = mysqli_prepare($db, $sql)){
                 echo "Oops! Something went wrong. Please try again later.";
             }
         }
-        echo $id;
     } else {
         echo "Oops! Something went wrong. Please try again later.";
     }

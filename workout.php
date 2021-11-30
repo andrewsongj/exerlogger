@@ -45,7 +45,7 @@ mysqli_close($db);
             </div>
             <ul class="navbar-nav">
                 <li class="nav-item active">
-                    <a class="nav-link text-white" href="#">Edit Profile</a>
+                    <a class="nav-link text-white" href="profile.php">Edit Info</a>
                 </li>
                 <li class="nav-item active">
                     <a class="nav-link text-white" href="logout.php">Logout</a>

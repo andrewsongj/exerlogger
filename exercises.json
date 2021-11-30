@@ -1,0 +1,16 @@
+[
+    {
+      "name":"flex arm hand",
+      "type":"bodyweight",
+      "equipment":"none",
+      "muscleUsed":"bicep",
+      "notes":"none here"
+    },
+    {
+      "name":"400m",
+      "type":"cardio",
+      "equipment":"none",
+      "muscleUsed":"legs",
+      "notes":"none here"
+    }
+]

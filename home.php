@@ -81,6 +81,10 @@ if (mysqli_connect_errno())
                 <div class='card card-body'>
                     <h5 style='text-align:left;'>" . $ename . " -- " . $date . " at " . $time . "</h5>
                     <b> Notes: " . $notes . "</b>
+                    <form action='deleteWorkout.php' method='post'>
+                        <input type='hidden' name='workout_delete' value='$wid'/>
+                        <input class='btn btn-link btn-sm'type='submit' value='Delete' style='color:red; float:right;'/>
+                    </form>
                 </div>
             </div>
             <p></p>

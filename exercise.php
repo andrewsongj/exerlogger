@@ -34,7 +34,7 @@ if (mysqli_connect_errno())
             </div>
             <ul class="navbar-nav">
                 <li class="nav-item active">
-                    <a class="nav-link text-white" href="#">Edit Profile</a>
+                    <a class="nav-link text-white" href="profile.php">Edit Info</a>
                 </li>
                 <li class="nav-item active">
                     <a class="nav-link text-white" href="logout.php">Logout</a>
@@ -42,14 +42,20 @@ if (mysqli_connect_errno())
             </ul>
         </div>
     </nav>
+    <p></p>
+    <h2 class='text-primary'>Select the exercise for your workout!</h2>
+    <p></p>
+    <p>You may upload your own:</p>
+    <form action='uploadExercise.php' method="POST"  enctype="multipart/form-data" >
+        <input type="file" name="importfile" accept="application/json"/> 
+        <input type="submit" id="import" name="submit" value="Upload"></input>
+    </form>
+    <p></p>
     <?php
     $sql = "SELECT * FROM exercise;";
     $result = mysqli_query($db,$sql);
 
     echo "
-    <p></p>
-    <h2 class='text-primary'>Select the exercise for your workout!</h2>
-    <p></p>
     <form action='workout.php' method='get' class='form'>
         <table class='table table-bordered table-condensed table-hover table-striped text-center'>
             <thead>
