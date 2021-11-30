@@ -10,6 +10,16 @@ if (mysqli_connect_errno())
 
 $wid = $_POST['workout_delete'];
 $etype = $_POST['exercise_type'];
+$sql = "DELETE FROM does WHERE workoutID = ?";
+$stmt = mysqli_prepare($db, $sql);
+mysqli_stmt_bind_param($stmt, "i", $param_wid);
+$param_wid = $wid;
+mysqli_stmt_execute($stmt);
+$sql = "DELETE FROM involves WHERE workoutID = ?";
+$stmt = mysqli_prepare($db, $sql);
+mysqli_stmt_bind_param($stmt, "i", $param_wid);
+$param_wid = $wid;
+mysqli_stmt_execute($stmt);
 if(strcmp($etype, "weightlifting") === 0) {
     $sql = "DELETE FROM weightworkout WHERE workoutID = ?";
 } else if(strcmp($etype, "bodyweight") === 0) {

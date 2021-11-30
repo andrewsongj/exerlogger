@@ -49,6 +49,19 @@ if($stmt = mysqli_prepare($db, $sql)){
         // Redirect to login page
         //header("location: home.php");
         $wid = mysqli_insert_id($db); //last inserted workout ID
+        $uid = $_SESSION["userID"];
+        $sql = "INSERT INTO `does` VALUES (?, ?);";
+        $stmt = mysqli_prepare($db, $sql);
+        mysqli_stmt_bind_param($stmt, "ii", $param_wid, $param_uid);
+        $param_wid = $wid;
+        $param_uid = $uid;
+        mysqli_stmt_execute($stmt);
+        $sql = "INSERT INTO `involves` VALUES (?, ?);";
+        $stmt = mysqli_prepare($db, $sql);
+        mysqli_stmt_bind_param($stmt, "ii", $param_wid, $param_eid);
+        $param_wid = $wid;
+        $param_uid = $eid;
+        mysqli_stmt_execute($stmt);
         if(strcmp($etype, "weightlifting") === 0) {
             $sql = "INSERT INTO weightworkout (workoutID, weight, reps, sets) VALUES (?, ?, ?, ?)";
             $stmt = mysqli_prepare($db, $sql);
