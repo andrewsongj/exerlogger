@@ -54,6 +54,34 @@ if (mysqli_connect_errno())
     <div class="container">
         <h4 class="my-5" style="text-align:left;">You are currently logged in as: <b><?php echo htmlspecialchars($_SESSION["username"]); ?></b>. Let's get some exercise in!</h4>
         <?php
+        $sql = "SELECT * FROM personalrecords WHERE id = ?";
+        $stmt = mysqli_prepare($db, $sql);
+        mysqli_stmt_bind_param($stmt, "i", $param_id);
+        $param_id = $_SESSION["userID"]; //set parameters
+        mysqli_stmt_execute($stmt);
+        $pr_result = mysqli_stmt_get_result($stmt);
+        $records = mysqli_fetch_array($pr_result);
+        $weight_rec = $records['weight'];
+        $distance_rec = $records['distance'];
+        $duration_rec = $records['duration'];
+        echo "
+        <table class='table table-bordered table-condensed table-hover table-striped text-center'>
+            <thead>
+                <tr>
+                    <th scope='col'>Weight Record</th>
+                    <th scope='col'>Distance Record</th>
+                    <th scope='col'>Cardio Duration Record</th>
+                </tr>
+            </thead>
+            <tbody class='text-center'>
+                <tr>
+                    <td>" . $weight_rec . " lbs</td>
+                    <td>" . $distance_rec . " meters</td>
+                    <td>" . $duration_rec . " mins</td>
+                </tr>
+            </tbody>
+        </table>"; 
+
         $sql = "SELECT * FROM workout WHERE userID = ?;";
         $stmt = mysqli_prepare($db, $sql);
         mysqli_stmt_bind_param($stmt, "i", $param_id);
@@ -67,6 +95,7 @@ if (mysqli_connect_errno())
             $date = $row['date'];
             $time = $row['time'];
             $notes = $row['notes'];
+            
             $sql = "SELECT * FROM exercise WHERE id = ?";
             $stmt = mysqli_prepare($db, $sql);
             mysqli_stmt_bind_param($stmt, "i", $param_id);
@@ -76,11 +105,45 @@ if (mysqli_connect_errno())
             $exercise = mysqli_fetch_array($ex_result);
             $ename = $exercise['name'];
             $etype = $exercise['type']; //the exercise type
+            
+            if(strcmp($etype, "weightlifting") === 0) {
+                $sql = "SELECT * FROM weightworkout WHERE workoutID = ?";
+            } else if(strcmp($etype, "bodyweight") === 0) {
+                $sql = "SELECT * FROM bodyweightworkout WHERE workoutID = ?";
+            } else if(strcmp($etype, "cardio") === 0) {
+                $sql = "SELECT * FROM cardioworkout WHERE workoutID = ?";
+            } else {
+                $sql = "SELECT * FROM stretchworkout WHERE workoutID = ?";
+            }
+            $stmt = mysqli_prepare($db, $sql);
+            mysqli_stmt_bind_param($stmt, "i", $param_id);
+            $param_id = $wid; //set parameters
+            mysqli_stmt_execute($stmt);
+            $wsub_result = mysqli_stmt_get_result($stmt); //sub workout
+            $subwk = mysqli_fetch_array($wsub_result);
+            $weight = $subwk['weight'] ?? '';
+            $reps = $subwk['reps'] ?? '';
+            $sets = $subwk['sets'] ?? '';
+            $distance = $subwk['distance'] ?? '';
+            $duration = $subwk['duration'] ?? '';
+
             echo "
             <div class='card' style='background-color: #4056a1;'>
                 <div class='card card-body'>
                     <h5 style='text-align:left;'>" . $ename . " -- " . $date . " at " . $time . "</h5>
-                    <b> Notes: " . $notes . "</b>
+                    <div style='float:left; width:50%;'>
+                        <div class='row' style='text-align:left;'>
+                            <div class='col-sm'> Reps: " . $reps . "</div>
+                            <div class='col-sm'> Sets: " . $sets . "</div>
+                            <div class='col-sm'> Weight: " . $weight . "</div>
+                        </div>
+                        <div class='row' style='text-align:left;'>
+                            <div class='col-sm'> Distance: " . $distance . "</div>
+                            <div class='col-sm'> Duration: " . $duration . "</div>
+                            <div class='col-sm'> </div>
+                        </div>
+                    </div>
+                    <b>Notes: " . $notes . "</b>
                     <form action='deleteWorkout.php' method='post'>
                         <input type='hidden' name='workout_delete' value='$wid'/>
                         <input type='hidden' name='exercise_type' value='$etype'/>

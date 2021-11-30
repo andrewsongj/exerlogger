@@ -31,6 +31,17 @@ $date = substr($datetime, 0, 10);
 $time = substr($datetime, 11, 5) .":00";
 $notes = $_POST["notes"];
 
+$sql = "SELECT * FROM `personalrecords` WHERE id = ?";
+$stmt = mysqli_prepare($db, $sql);
+mysqli_stmt_bind_param($stmt, "i", $param_uid);
+$param_uid = $_SESSION["userID"];
+mysqli_stmt_execute($stmt);
+$records_result = mysqli_stmt_get_result($stmt); //sub workout
+$records = mysqli_fetch_array($records_result);
+$weight_rec = $records['weight'];
+$distance_rec = $records['distance'];
+$duration_rec = $records['duration'];
+
 $sql = "INSERT INTO workout (userID, exerciseID, date, time, notes) VALUES (?, ?, ?, ?, ?)";
 
 if($stmt = mysqli_prepare($db, $sql)){
@@ -71,6 +82,14 @@ if($stmt = mysqli_prepare($db, $sql)){
             $param_reps = $reps;
             $param_sets = $sets;
             if(mysqli_stmt_execute($stmt)){
+                if($weight > $weight_rec){
+                    $sql = "UPDATE personalrecords SET weight = ? WHERE id = ?";
+                    $stmt = mysqli_prepare($db, $sql);
+                    mysqli_stmt_bind_param($stmt, "ii", $param_weight, $param_userID);
+                    $param_weight = $weight;
+                    $param_userID = $_SESSION["userID"];
+                    mysqli_stmt_execute($stmt);
+                }
                 header("location: home.php");
             } else {
                 echo "Oops! Something went wrong. Please try again later.";
@@ -83,6 +102,22 @@ if($stmt = mysqli_prepare($db, $sql)){
             $param_distance = $distance;
             $param_duration = $duration;
             if(mysqli_stmt_execute($stmt)){
+                if($distance > $distance_rec){
+                    $sql = "UPDATE personalrecords SET distance = ? WHERE id = ?";
+                    $stmt = mysqli_prepare($db, $sql);
+                    mysqli_stmt_bind_param($stmt, "ii", $param_distance, $param_userID);
+                    $param_distance = $distance;
+                    $param_userID = $_SESSION["userID"];
+                    mysqli_stmt_execute($stmt);
+                }
+                if($duration > $duration_rec){
+                    $sql = "UPDATE personalrecords SET duration = ? WHERE id = ?";
+                    $stmt = mysqli_prepare($db, $sql);
+                    mysqli_stmt_bind_param($stmt, "ii", $param_duration, $param_userID);
+                    $param_duration = $duration;
+                    $param_userID = $_SESSION["userID"];
+                    mysqli_stmt_execute($stmt);
+                }
                 header("location: home.php");
             } else {
                 echo "Oops! Something went wrong. Please try again later.";

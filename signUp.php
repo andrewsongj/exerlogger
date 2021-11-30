@@ -102,7 +102,17 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
             // Attempt to execute the prepared statement
             if(mysqli_stmt_execute($stmt)){
                 // Redirect to login page
-                header("location: login.php");
+                $uid = mysqli_insert_id($db);
+
+                $sql = "INSERT INTO personalrecords (id) VALUES (?)";
+                $stmt = mysqli_prepare($db, $sql);
+                mysqli_stmt_bind_param($stmt, "i", $param_uid);
+            
+                // Set parameters
+                $param_uid = $uid;
+                if(mysqli_stmt_execute($stmt)){
+                    header("location: login.php");
+                }
             } else{
                 echo "Oops! Something went wrong. Please try again later.";
             }
