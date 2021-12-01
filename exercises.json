@@ -1,16 +1,9 @@
 [
     {
-      "name":"flex arm hand",
-      "type":"bodyweight",
-      "equipment":"none",
-      "muscleUsed":"bicep",
-      "notes":"none here"
-    },
-    {
-      "name":"400m",
-      "type":"cardio",
-      "equipment":"none",
-      "muscleUsed":"legs",
-      "notes":"none here"
+      "name":"floor press",
+      "type":"weightlifting",
+      "equipment":"dumbbell",
+      "muscleUsed":"shoulder",
+      "notes":"press up from the ground"
     }
 ]
