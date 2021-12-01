@@ -4,8 +4,8 @@ class DbUtil{
 	// public static $loginPass = "whdbfl<33";
 	// public static $host = "localhost:3307"; // local host
 	// public static $schema = "final"; // DB Schema
-	public static $loginUser = "cm4qrk"; 
-	public static $loginPass = "DBPassword!";
+	public static $loginUser = "cm4qrk_a"; 
+	public static $loginPass = "Fall2021!!";
 	public static $host = "mysql01.cs.virginia.edu"; // local host
 	public static $schema = "cm4qrk"; // DB Schema
   
